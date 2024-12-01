@@ -1,0 +1,19 @@
+---
+const { row, id } = Astro.props;
+
+let html = "";
+
+if (Astro.slots.has("actions")) {
+    html = await Astro.slots.render("actions", [row, id]);
+    console.log("html: ", html);
+}
+
+---
+<tr>
+    {row.map(cell => (
+      <td>{cell}</td>
+    ))}
+    <td>
+      <Fragment set:html={html} />
+    </td>
+  </tr>

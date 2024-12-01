@@ -1,4 +1,6 @@
 ---
+import TableRow from "./TableRow.astro";
+
 const { headers = [], rows = [] } = Astro.props;
 ---
 <table>
@@ -11,25 +13,10 @@ const { headers = [], rows = [] } = Astro.props;
     </tr>
   </thead>
   <tbody>
-    {rows.map(async (row, index) => {
-      // Render the actions slot dynamically with row and index as arguments
-      let actionsHtml = '';
-      console.log("has slots?: ", Astro.slots.has('actions'))
-      if (Astro.slots.has('actions')) {
-        actionsHtml = await Astro.slots.render('actions', [row, index]);
-        console.log(actionsHtml);
-      }
-
-      return (
-        <tr>
-          {row.map(cell => (
-            <td>{cell}</td>
-          ))}
-          <td>
-            <Fragment set:html={actionsHtml} />
-          </td>
-        </tr>
-      );
-    })}
+    {rows.map((row, index) => (
+      <TableRow row={row} id={index}>
+        <slot name="actions" slot="actions" />
+      </TableRow>
+    ))}
   </tbody>
 </table>

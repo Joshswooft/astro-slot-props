@@ -4,6 +4,7 @@ const { row, id } = Astro.props;
 let html = "";
 
 if (Astro.slots.has("actions")) {
+    console.log("id: ", id);
     html = await Astro.slots.render("actions", [row, id]);
     console.log("html: ", html);
 }

@@ -13,10 +13,16 @@ const { headers = [], rows = [] } = Astro.props;
     </tr>
   </thead>
   <tbody>
-    {rows.map((row, index) => (
-      <TableRow row={row} id={index}>
-        <slot name="actions" slot="actions" />
-      </TableRow>
-    ))}
+    {rows.map((row, index) => {
+
+      const actionsHTML = Astro.slots.render("actions", [row, index]);
+
+      return (
+        <TableRow row={row} id={index}>
+          {(row, id) => (<Fragment name="actions" slot="actions"  set:html={actionsHTML} />)}
+        </TableRow>
+      )
+    })
+  }
   </tbody>
 </table>

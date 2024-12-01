@@ -1,0 +1,17 @@
+---
+import Table from "./Table.astro";
+import Actions from "./Actions.astro";
+
+const headers = ['Name', 'Email', 'Status'];
+const rows = [
+  ['John Doe', 'john@example.com', 'Pending'],
+  ['Jane Smith', 'jane@example.com', 'Invited'],
+  ['Alice Johnson', 'alice@example.com', 'Accepted']
+];
+---
+
+<Table {headers} {rows}>
+  <div slot="actions">
+    {(row, index) => (<Actions row={row} id={index} />)}
+  </div>
+</Table>

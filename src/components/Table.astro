@@ -1,0 +1,35 @@
+---
+const { headers = [], rows = [] } = Astro.props;
+---
+<table>
+  <thead>
+    <tr>
+      {headers.map(header => (
+        <th>{header}</th>
+      ))}
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {rows.map(async (row, index) => {
+      // Render the actions slot dynamically with row and index as arguments
+      let actionsHtml = '';
+      console.log("has slots?: ", Astro.slots.has('actions'))
+      if (Astro.slots.has('actions')) {
+        actionsHtml = await Astro.slots.render('actions', [row, index]);
+        console.log(actionsHtml);
+      }
+
+      return (
+        <tr>
+          {row.map(cell => (
+            <td>{cell}</td>
+          ))}
+          <td>
+            <Fragment set:html={actionsHtml} />
+          </td>
+        </tr>
+      );
+    })}
+  </tbody>
+</table>
